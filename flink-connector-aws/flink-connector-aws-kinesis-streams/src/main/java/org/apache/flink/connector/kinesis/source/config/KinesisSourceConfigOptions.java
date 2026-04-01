@@ -92,16 +92,16 @@ public class KinesisSourceConfigOptions {
                     .withDescription(
                             "The interval in milliseconds between fetches with empty records");
 
-    public static final ConfigOption<Duration> SHARD_GET_RECORDS_INTERVAL =
-            ConfigOptions.key("source.shard.get-records.interval")
+    public static final ConfigOption<Duration> READER_NONEMPTY_RECORDS_FETCH_INTERVAL =
+            ConfigOptions.key("source.reader.nonempty-records-fetch-interval")
                     .durationType()
                     .defaultValue(Duration.ofMillis(250))
                     .withDescription(
-                            "The interval between each GetRecords request to a Kinesis shard."
-                                    + " Equivalent to SHARD_GETRECORDS_INTERVAL_MILLIS in the legacy"
-                                    + " FlinkKinesisConsumer. Kinesis allows at most 5 GetRecords"
-                                    + " calls per second per shard. The default of 250ms keeps each"
-                                    + " shard safely under this limit.");
+                            "The interval between fetches when records are returned."
+                                    + " Counterpart to empty-records-fetch-interval."
+                                    + " Kinesis allows at most 5 GetRecords calls per second"
+                                    + " per shard. The default of 250ms keeps each shard safely"
+                                    + " under this limit.");
 
     public static final ConfigOption<ConsumerLifecycle> EFO_CONSUMER_LIFECYCLE =
             ConfigOptions.key("source.efo.lifecycle")
