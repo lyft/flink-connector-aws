@@ -47,10 +47,22 @@ under the License.
     </licenses>
 
     <scm>
-        <url>https://github.com/apache/flink-connector-aws</url>
-        <connection>git@github.com:apache/flink-connector-aws.git</connection>
-        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/flink-connector-aws.git</developerConnection>
+        <url>https://github.com/lyft/flink-connector-aws</url>
+        <connection>scm:git:https://git@github.com/lyft/flink-connector-aws.git</connection>
+        <developerConnection>scm:git:https://git@github.com/lyft/flink-connector-aws.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>lyft-releases</id>
+            <url>https://artifactory.lyft.net/artifactory/virtual-maven-libs-release</url>
+        </repository>
+        <snapshotRepository>
+            <id>lyft-snapshots</id>
+            <url>https://artifactory.lyft.net/artifactory/virtual-maven-libs-snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <properties>
         <aws.sdkv1.version>1.12.439</aws.sdkv1.version>
