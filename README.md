@@ -40,19 +40,16 @@ Requires Artifactory publish permissions (see internal documentation).
 # Deploy a SNAPSHOT for testing
 mvn versions:set -DnewVersion=5.0.0-LYFT-1-SNAPSHOT -DgenerateBackupPoms=false
 rm -f flink-connector-aws/flink-connector-aws-kinesis-streams/dependency-reduced-pom.xml
-mvn deploy \
+mvn clean deploy \
   -pl .,flink-connector-aws-base,flink-connector-aws,flink-connector-aws/flink-connector-aws-kinesis-streams \
-  -DskipTests -B -X
+  -am -DskipTests -B -X
 
 # Deploy a release for production
 mvn versions:set -DnewVersion=5.0.0-LYFT-1 -DgenerateBackupPoms=false
 rm -f flink-connector-aws/flink-connector-aws-kinesis-streams/dependency-reduced-pom.xml
-mvn deploy \
+mvn clean deploy \
   -pl .,flink-connector-aws-base,flink-connector-aws,flink-connector-aws/flink-connector-aws-kinesis-streams \
-  -DskipTests -B -X
-
-# Revert version after deploying
-mvn versions:set -DnewVersion=5.0.0 -DgenerateBackupPoms=false
+  -am -DskipTests -B -X
 ```
 
 ---
