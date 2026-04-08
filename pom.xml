@@ -35,7 +35,7 @@ under the License.
 
     <name>Flink : Connectors : AWS</name>
     <packaging>pom</packaging>
-    <url>https://flink.apache.org</url>
+    <url>https://github.com/lyft/flink-connector-aws</url>
     <inceptionYear>2022</inceptionYear>
 
     <licenses>
