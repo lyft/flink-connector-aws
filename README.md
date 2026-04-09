@@ -2,6 +2,58 @@
 
 This repository contains the official Apache Flink AWS connectors.
 
+## Lyft Fork
+
+This is Lyft's fork of [apache/flink-connector-aws](https://github.com/apache/flink-connector-aws),
+based on the upstream `v5.0` branch (Flink 1.19 compatible).
+
+### Branch Strategy
+
+| Branch | Purpose |
+|---|---|
+| `main` | Tracks upstream `apache/flink-connector-aws` main branch (do not commit Lyft changes here) |
+| `lyft-stable-5.0` | Lyft's stable branch with patches applied on top of upstream v5.0 |
+
+### Patches
+
+- **Kinesis GetRecords fetch interval** ([FLINK-36947](https://issues.apache.org/jira/browse/FLINK-36947)):
+  Fixes excessive `GetRecords` calls on idle Kinesis sources causing throttling.
+  Adds a configurable `READER_NONEMPTY_RECORDS_FETCH_INTERVAL` for non-empty record polling.
+
+### Versioning
+
+Artifact versions follow the pattern `<upstream>-LYFT-<patch>`, e.g. `5.0.0-LYFT-1`.
+
+| Version | When to use |
+|---|---|
+| `5.0.0-LYFT-1-SNAPSHOT` | Testing -- can be overwritten repeatedly |
+| `5.0.0-LYFT-1` | Production release -- immutable once published |
+
+When bumping, increment the patch number: `LYFT-1` → `LYFT-2` → `LYFT-3`.
+Keep the upstream prefix (`5.0.0`) matching the upstream tag the branch is based on.
+
+### Publishing
+
+Requires Artifactory publish permissions (see internal documentation).
+
+```bash
+# Deploy a SNAPSHOT for testing
+mvn versions:set -DnewVersion=5.0.0-LYFT-1-SNAPSHOT -DgenerateBackupPoms=false
+rm -f flink-connector-aws/flink-connector-aws-kinesis-streams/dependency-reduced-pom.xml
+mvn clean deploy \
+  -pl .,flink-connector-aws-base,flink-connector-aws,flink-connector-aws/flink-connector-aws-kinesis-streams \
+  -am -DskipTests -B -X
+
+# Deploy a release for production
+mvn versions:set -DnewVersion=5.0.0-LYFT-1 -DgenerateBackupPoms=false
+rm -f flink-connector-aws/flink-connector-aws-kinesis-streams/dependency-reduced-pom.xml
+mvn clean deploy \
+  -pl .,flink-connector-aws-base,flink-connector-aws,flink-connector-aws/flink-connector-aws-kinesis-streams \
+  -am -DskipTests -B -X
+```
+
+---
+
 ## Apache Flink
 
 Apache Flink is an open source stream processing framework with powerful stream- and batch-processing capabilities.
